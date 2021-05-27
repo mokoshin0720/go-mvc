@@ -1,0 +1,23 @@
+version: '3'
+
+services: 
+    db:
+        image: mysql:8.0.25
+        ports:
+            - '3306:3306'
+        environment: 
+            MYSQL_DATABASE: dbmate
+            MYSQL_ROOT_PASSWORD: password
+
+    web:
+        build: .
+        volumes:
+            - .:/go/src/tutorial/mvc
+        ports:
+            - '8080:8080'
+        depends_on:
+            - db
+        links:
+            - db
+        tty: true
+        stdin_open: true
